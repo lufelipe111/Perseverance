@@ -10,18 +10,18 @@ An planet exploration simple game
 * Prof. Dr. Harlen Costa Batagelo
 
 ## To Do's
-[x] Isometric vision
-[x] Terrain
-[x] Rover prototype
-	[x] Move keys ( _A_, _W_, _S_, _D_ )
-	[ ] Action key ( _space_ )
-	[ ] Aditional key ( _shift_ - crouch?)
-[ ] Rock prototype
-	[ ] break rock action
-	[ ] precision task
-[ ] Samples to be encountered
-	[ ] organic matter
-	[ ] water
-	[ ] minerals
-[ ] Robot health
-	[ ] Sandstorm decreasing health
+* [x] Isometric vision
+* [x] Terrain
+* [x] Rover prototype
+	* [x] Move keys ( _A_, _W_, _S_, _D_ )
+	* [ ] Action key ( _space_ )
+	* [ ] Aditional key ( _shift_ - crouch?)
+* [ ] Rock prototype
+	* [ ] break rock action
+	* [ ] precision task
+* [ ] Samples to be encountered
+	* [ ] organic matter
+	* [ ] water
+	* [ ] minerals
+* [ ] Robot health
+	* [ ] Sandstorm decreasing health
