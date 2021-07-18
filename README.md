@@ -14,8 +14,8 @@ An planet exploration simple game
 * [x] Terrain
 * [x] Rover prototype
 	* [x] Move keys ( _A_, _W_, _S_, _D_ )
-	* [ ] Action key ( _space_ )
-	* [ ] Aditional key ( _shift_ - crouch?)
+	* [x] Action key ( _space_ )
+	* [x] Aditional key ( _shift_ - crouch?)
 * [ ] Rock prototype
 	* [ ] break rock action
 	* [ ] precision task
