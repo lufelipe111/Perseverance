@@ -1,6 +1,6 @@
 # Perseverance
 
-An planet exploration simple game
+A planet exploration simple game
 
 ## Authors
 * Beatriz Libanio de Araujo Yordaky - RA11013714
@@ -16,6 +16,7 @@ An planet exploration simple game
 	* [x] Move keys ( _A_, _W_, _S_, _D_ )
 	* [x] Action key ( _space_ )
 	* [x] Aditional key ( _shift_ - crouch?)
+* [ ] Lock main camera on rover
 * [ ] Rock prototype
 	* [ ] break rock action
 	* [ ] precision task
