@@ -4,37 +4,76 @@ using UnityEngine;
 
 public class RoverController : MonoBehaviour
 {
+    //Rigidbody rb;
+
     [SerializeField]
     float moveSpeed = 4f;
-
-    Vector3 forward, right;
+    float crouchSpeed = 2f;
+    Vector3 forward, right, down, heading;
+    bool isCrouched;
 
     // Start is called before the first frame update
     void Start()
     {
+        //rb = GetComponent<Rigidbody>();
+
+        isCrouched = false;
+
         forward = Camera.main.transform.forward;
-        forward.y = 0;
+        forward.y = 0; // planify the move direction
         forward = Vector3.Normalize(forward);
-        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward;
+        right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward; // trasnposes the horizontal direction to be 90 degrees side from the vertical
+        down = Quaternion.Euler(new Vector3(0, 0, -90)) * forward; // trasnposes the horizontal direction to be 90 degrees down from the vertical
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.anyKey)
-            Move();
+        
     }
 
-    void Move()
+    private void FixedUpdate()
     {
-        Vector3 direction = new Vector3(Input.GetAxis("HorizontalKey"), 0, Input.GetAxis("VerticalKey"));
-        Vector3 rightMovement = right * moveSpeed * Time.deltaTime * Input.GetAxis("HorizontalKey");
-        Vector3 upMovement = forward * moveSpeed * Time.deltaTime * Input.GetAxis("VerticalKey");
+        if (Input.anyKey || isCrouched)
+            Control();
 
-        Vector3 heading = Vector3.Normalize(rightMovement + upMovement);
+        
+    }
 
-        transform.forward = heading;
-        transform.position += rightMovement;
-        transform.position += upMovement;
+    void Control()
+    {
+        // movement control
+        if (!isCrouched && (Input.GetAxis("HorizontalKey") != 0 || Input.GetAxis("VerticalKey") != 0))
+        {
+            Vector3 rightMovement = Input.GetAxis("HorizontalKey") * moveSpeed * Time.deltaTime * right;  // horizontal movement
+            Vector3 upMovement = Input.GetAxis("VerticalKey") * moveSpeed * Time.deltaTime * forward;     // vertical movement
+
+            heading = Vector3.Normalize(rightMovement + upMovement); // direction used to turn around
+
+            transform.forward = heading; // turn around
+                                         //rb.AddForce(heading);
+
+            transform.position += rightMovement;
+            transform.position += upMovement;
+        }
+
+        // Interaction control
+        if (Input.GetAxis("InteractionKey") > 0)
+            Debug.Log("Interação");
+
+        // Crouch control
+        if (Input.GetAxis("AditionalKey") > 0 && !isCrouched)
+        {
+            isCrouched = true;
+            transform.position -= new Vector3(0, 0.5f, 0);
+            Debug.Log("Crouch");
+        }
+        else if (Input.GetAxis("AditionalKey") == 0 && isCrouched)
+        {
+            isCrouched = false;
+            transform.position += new Vector3(0, 0.5f, 0);
+            Debug.Log("Stand up");
+        }
+
     }
 }
