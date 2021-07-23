@@ -20,7 +20,7 @@ A planet exploration simple game
 * [x] Rock prototype
 	* [x] break rock action
 	* [x] random generate rocks at map
-	* [ ] precision task
+	* [x] precision task
 * [ ] Samples to be encountered
 	* [ ] Bag of samples
 	* [ ] organic matter
