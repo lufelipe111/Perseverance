@@ -22,10 +22,14 @@ A planet exploration simple game
 	* [x] random generate rocks at map
 	* [x] precision task
 * [ ] Samples to be encountered
-	* [ ] Bag of samples
 	* [ ] organic matter
 	* [ ] water
 	* [ ] minerals
+		* [ ] Ore
+		* [ ] Copper
+		* [ ] Diamond
+	* [ ] Bag of samples
+		* [ ] Generate random objectives
 * [ ] espherical terrain
 * [ ] Robot health
 	* [ ] Sandstorm decreasing health
