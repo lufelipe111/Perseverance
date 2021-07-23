@@ -16,13 +16,16 @@ A planet exploration simple game
 	* [x] Move keys ( _A_, _W_, _S_, _D_ )
 	* [x] Action key ( _space_ )
 	* [x] Aditional key ( _shift_ - crouch?)
-* [ ] Lock main camera on rover
-* [ ] Rock prototype
-	* [ ] break rock action
+* [x] Lock main camera on rover
+* [x] Rock prototype
+	* [x] break rock action
+	* [x] random generate rocks at map
 	* [ ] precision task
 * [ ] Samples to be encountered
+	* [ ] Bag of samples
 	* [ ] organic matter
 	* [ ] water
 	* [ ] minerals
+* [ ] espherical terrain
 * [ ] Robot health
 	* [ ] Sandstorm decreasing health
