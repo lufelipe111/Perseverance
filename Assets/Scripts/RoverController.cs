@@ -16,7 +16,8 @@ public class RoverController : MonoBehaviour
     private Vector3 originalHeight, crouchedHeight;
     private Vector3 forward, right, heading;
     private int pointerDirection = -1;
-
+    private bool taskSuccess = false, isTaskActive = false;
+    private float dist = 0;
     private GameObject precisionTaskLeft;
     private GameObject precisionTaskTarget;
     private GameObject precisionTaskRight;
@@ -65,6 +66,7 @@ public class RoverController : MonoBehaviour
 
     void Control()
     {
+        
         // movement control
         if (!isCrouched && (Input.GetAxis("HorizontalKey") != 0 || Input.GetAxis("VerticalKey") != 0))
         {
@@ -77,8 +79,7 @@ public class RoverController : MonoBehaviour
             rb.velocity = moveSpeed * heading;
             initialPointerPosition += initialPointerPosition + (moveSpeed * heading);
         }
-
-        if(Input.GetAxis("HorizontalKey") == 0 && Input.GetAxis("VerticalKey") == 0)
+        else if(Input.GetAxis("HorizontalKey") == 0 && Input.GetAxis("VerticalKey") == 0)
         {
             rb.velocity = Vector3.zero;
         }
@@ -87,33 +88,44 @@ public class RoverController : MonoBehaviour
         if (Input.GetAxis("InteractionKey") != 0)
         {
             ShowTaskComponent(true);
+            isTaskActive = true;
 
             precisionPointerTransform.position += pointerVelocity * pointerDirection * (Quaternion.Euler(0, 90, 0) * forward);
-            var dist = Vector3.Distance(precisionPointerTransform.position, precisionPointerAnchor.transform.position);
+            dist = Vector3.Distance(
+                                precisionPointerTransform.position, 
+                                precisionPointerAnchor.transform.position
+                           );
             if (dist > 3.5)
             {
                 pointerDirection = -pointerDirection;
+                // Line to prevent border bug
                 precisionPointerTransform.position = precisionPointerAnchor.transform.position + (Quaternion.Euler(0, -90 * pointerDirection, 0) * forward) * 3.5f;
             }
-            
-            
+   
+        }
+        else if (Input.GetAxis("InteractionKey") == 0 && isTaskActive) // when space is not pressed anymore
+        {
+            DelayShowTaskComponent(1, false);
 
-            //precisionPointer.transform.position = initialPointerPos;
+            taskSuccess = dist <= 0.5f;
 
             rocks = GameObject.FindGameObjectsWithTag("Rock");
-            if (rocks.Length > 0)
+            if (rocks.Length > 0 && taskSuccess)
             {
                 GetClosestEnemyAndDestroy(rocks);
-                Debug.Log("Rocha destruida");
+                Debug.Log("Rocha quebrada");
             }
-            else 
+            else if (!taskSuccess)
+            {
+                Debug.Log("Pontuação nao atingida");
+            }
+            else
             {
                 Debug.Log("Todas as rochas foram destruidas");
             }
-        }
-        else
-        {
-            ShowTaskComponent(false);
+
+
+            isTaskActive = false;
         }
 
         // Crouch control
@@ -165,6 +177,20 @@ public class RoverController : MonoBehaviour
         precisionTaskTarget.SetActive(status);
         precisionTaskRight.SetActive(status);
         precisionPointer.SetActive(status);
+    }
+
+    void DelayShowTaskComponent(float delayTime, bool status)
+    {
+        StartCoroutine(DelayAction(delayTime, status));
+    }
+
+    IEnumerator DelayAction(float delayTime, bool status)
+    {
+        //Wait for the specified delay time before continuing.
+        yield return new WaitForSeconds(delayTime);
+
+        //Do the action after the delay time has finished.
+        ShowTaskComponent(status);
     }
 
 }

@@ -18,21 +18,13 @@ public class BuildScene : MonoBehaviour
     void Start()
     {
         rockSize = prefab.transform.localScale.y;
-        InstantiateRocks();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    private void OnValidate()
-    {
         offset = new Vector3(-125, rockSize / 2, -125);
         //points = PoissonDiscSampling.GeneratePoints(radius, regionSize, numRocks, rejectionSamples);
 
         points = GeneratePoints();
+
+        InstantiateRocks();
     }
 
     List<Vector3> GeneratePoints()
