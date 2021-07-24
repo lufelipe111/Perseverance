@@ -9,6 +9,10 @@ A planet exploration simple game
 ## Professor
 * Prof. Dr. Harlen Costa Batagelo
 
+## Video e Slide
+[YouTube](https://youtu.be/YsO1ZsMnAMo)
+[Google Docs](https://drive.google.com/file/d/1MN1-zGH00ckq1YLk9Rt-G-SqFeK_65du/view?usp=sharing)
+
 ## To Do's
 * [x] Isometric vision
 * [x] Terrain
