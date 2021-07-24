@@ -30,3 +30,7 @@ A planet exploration simple game
 * [ ] espherical terrain
 * [ ] Robot health
 	* [ ] Sandstorm decreasing health
+* [ ] Other ways to get materials
+* [ ] Rover Modeling
+* [ ] Menu
+* [ ] Quit game
