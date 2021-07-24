@@ -115,7 +115,7 @@ public class RoverController : MonoBehaviour
         }
         else if (Input.GetAxis("InteractionKey") == 0 && isTaskActive) // when space is not pressed anymore
         {
-            DelayShowTaskComponent(1, false);
+            DelayShowTaskComponent(0.75f, false);
 
             taskSuccess = dist <= 0.5f;
 
