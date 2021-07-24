@@ -9,17 +9,14 @@ public class BuildScene : MonoBehaviour
     public Vector3 regionSize;
     public int rejectionSamples = 30;
 
-    private float rockSize;
-    private Vector3 offset;
+    private float rockSize = 2;
     
-        List<Vector3> points;
+    List<Vector3> points;
 
     // Start is called before the first frame update
     void Start()
     {
-        rockSize = prefab.transform.localScale.y;
 
-        offset = new Vector3(-125, rockSize / 2, -125);
         //points = PoissonDiscSampling.GeneratePoints(radius, regionSize, numRocks, rejectionSamples);
 
         points = GeneratePoints();
@@ -36,8 +33,8 @@ public class BuildScene : MonoBehaviour
 
         for (int i = 0; i < numRocks; i++)
         {
-            int x = (int)Random.Range(-terrainSize.x / 2, terrainSize.x / 2);
-            int z = (int)Random.Range(-terrainSize.z / 2, terrainSize.z / 2);
+            int x = (int) Random.Range(-terrainSize.x / 2, terrainSize.x / 2);
+            int z = (int) Random.Range(-terrainSize.z / 2, terrainSize.z / 2);
 
             Vector3 point = new Vector3(x, rockSize / 2, z);
 

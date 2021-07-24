@@ -21,14 +21,11 @@ A planet exploration simple game
 	* [x] break rock action
 	* [x] random generate rocks at map
 	* [x] precision task
-* [ ] Samples to be encountered
-	* [ ] organic matter
-	* [ ] water
-	* [ ] minerals
-		* [ ] Ore
-		* [ ] Copper
-		* [ ] Diamond
-	* [ ] Bag of samples
+* [x] Samples to be encountered
+	* [x] organic matter
+	* [x] water
+	* [x] minerals
+	* [x] Bag of samples
 		* [ ] Generate random objectives
 * [ ] espherical terrain
 * [ ] Robot health

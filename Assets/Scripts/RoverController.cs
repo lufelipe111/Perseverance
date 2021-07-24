@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoverController : MonoBehaviour
 {
@@ -26,9 +27,18 @@ public class RoverController : MonoBehaviour
     private Transform precisionPointerTransform;
     private Vector3 initialPointerPosition;
 
+    private List<ResourcesModel> resourcesBag;
+
+    public Text WaterText;
+    public Text OrganicMatterText;
+    public Text MineralsText;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        resourcesBag = new List<ResourcesModel>();
+
         precisionTaskLeft = GameObject.Find("PrecisionTaskLeft");
         precisionTaskTarget = GameObject.Find("PrecisionTaskRight");
         precisionTaskRight = GameObject.Find("PrecisionTaskTarget");
@@ -168,6 +178,10 @@ public class RoverController : MonoBehaviour
             }
         }
 
+        RockController rockController = nearestEnemy.GetComponent<RockController>();
+
+        CollectResources(rockController.resources);
+
         Destroy(nearestEnemy);
     }
 
@@ -191,6 +205,31 @@ public class RoverController : MonoBehaviour
 
         //Do the action after the delay time has finished.
         ShowTaskComponent(status);
+    }
+
+    void CollectResources(List<ResourcesModel> resources)
+    {
+        resourcesBag.AddRange(resources);
+
+        UpdateScreenResources();
+    }
+
+    void UpdateScreenResources()
+    {
+        int water = 0;
+        int organicMatter = 0;
+        int minerals = 0;
+
+        foreach(var resource in resourcesBag)
+        {
+            if (resource.idResource == 0) water++;
+            else if (resource.idResource == 1) organicMatter++;
+            else minerals++;
+        }
+
+        WaterText.text = $"Water {water}/5";
+        OrganicMatterText.text = $"Organic Matter {organicMatter}/5";
+        MineralsText.text = $"Minerals {minerals}/5";
     }
 
 }
