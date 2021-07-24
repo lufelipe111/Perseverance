@@ -10,8 +10,8 @@ A planet exploration simple game
 * Prof. Dr. Harlen Costa Batagelo
 
 ## Video e Slide
-[YouTube](https://youtu.be/VSLqw8BzOvQ)
-[Google Docs](https://drive.google.com/file/d/199TFwNBcPsWmDc0ugve0dJux9mSkPylh/view?usp=sharing)
+* [YouTube](https://youtu.be/VSLqw8BzOvQ)
+* [Google Docs](https://drive.google.com/file/d/199TFwNBcPsWmDc0ugve0dJux9mSkPylh/view?usp=sharing)
 
 ## To Do's
 * [x] Isometric vision
