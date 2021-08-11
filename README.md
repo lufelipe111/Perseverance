@@ -30,10 +30,11 @@ A planet exploration simple game
 	* [x] water
 	* [x] minerals
 	* [x] Bag of samples
-		* [ ] Generate random objectives
-* [ ] espherical terrain
-* [ ] Robot health
-	* [ ] Sandstorm decreasing health
+		* [x] Generate random objectives
+* [x] Robot health
+* [x] Particle System sandstorm
+* [ ] Hole mechanics
+* [ ] Espherical terrain
 * [ ] Other ways to get materials
 * [ ] Rover Modeling
 * [ ] Menu

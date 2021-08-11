@@ -5,14 +5,29 @@ using UnityEngine.UI;
 
 public class RoverController : MonoBehaviour
 {
+    [Header ("Rover Attributes")]
     public float moveSpeed = 4f;
     public float minDist = 20;
     public float pointerVelocity = 0.5f;
+    public int maxHealth = 100;
+    public int currentHealth;
+    public HealthController healthBar;
+    
  
+    [Header ("Achievements")]
+    public Text WaterText;
+    public Text OrganicMatterText;
+    public Text MineralsText;
+    public int TotalResources = 15;
+    [Space(10)]
+    public bool isCrouched;
+
     private Rigidbody rb;
     private GameObject[] rocks;
 
-    bool isCrouched;
+    int waterR;
+    int organicMatterR;
+    int mineralsR;
 
     private Vector3 originalHeight, crouchedHeight;
     private Vector3 forward, right, heading;
@@ -29,14 +44,13 @@ public class RoverController : MonoBehaviour
 
     private List<ResourcesModel> resourcesBag;
 
-    public Text WaterText;
-    public Text OrganicMatterText;
-    public Text MineralsText;
-
-
     // Start is called before the first frame update
     void Start()
     {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+        healthBar.SetHealth(currentHealth);
+
         resourcesBag = new List<ResourcesModel>();
 
         precisionTaskLeft = GameObject.Find("PrecisionTaskLeft");
@@ -67,11 +81,21 @@ public class RoverController : MonoBehaviour
         forward = Vector3.Normalize(forward);
         right = Quaternion.Euler(new Vector3(0, 90, 0)) * forward; // transposes the horizontal direction to be 90 degrees side from the vertical
 
+        SetRandomResources(TotalResources);
+        UpdateScreenResources();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            TakeDamage(5);
+        }
     }
 
     private void FixedUpdate()
     {
-        Control();        
+        Control();
     }
 
     void Control()
@@ -133,9 +157,6 @@ public class RoverController : MonoBehaviour
             {
                 Debug.Log("Todas as rochas foram destruidas");
             }
-
-
-            isTaskActive = false;
         }
 
         // Crouch control
@@ -196,6 +217,7 @@ public class RoverController : MonoBehaviour
     void DelayShowTaskComponent(float delayTime, bool status)
     {
         StartCoroutine(DelayAction(delayTime, status));
+        isTaskActive = status;
     }
 
     IEnumerator DelayAction(float delayTime, bool status)
@@ -227,9 +249,21 @@ public class RoverController : MonoBehaviour
             else minerals++;
         }
 
-        WaterText.text = $"Water {water}/5";
-        OrganicMatterText.text = $"Organic Matter {organicMatter}/5";
-        MineralsText.text = $"Minerals {minerals}/5";
+        WaterText.text = $"Water {water}/{waterR}";
+        OrganicMatterText.text = $"Organic Matter {organicMatter}/{organicMatterR}";
+        MineralsText.text = $"Minerals {minerals}/{mineralsR}";
     }
 
+    void SetRandomResources(int totalResources)
+    {
+        waterR = (int) Random.Range(1, totalResources - 2);
+        organicMatterR = (int) Random.Range(1, totalResources - waterR - 1);
+        mineralsR = (int) totalResources - waterR - organicMatterR;
+    }
+    
+    public void TakeDamage(int dmg)
+    {
+        currentHealth -= dmg;
+        healthBar.SetHealth(currentHealth);
+    }
 }
