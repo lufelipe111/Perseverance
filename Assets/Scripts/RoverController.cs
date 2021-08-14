@@ -9,6 +9,7 @@ public class RoverController : MonoBehaviour
     public float moveSpeed = 4f;
     public float minDist = 20;
     public float pointerVelocity = 0.5f;
+    public int lifeUpPerGear = 15;
     public int maxHealth = 100;
     public int currentHealth;
     public HealthController healthBar;
@@ -22,12 +23,18 @@ public class RoverController : MonoBehaviour
     [Space(10)]
     public bool isCrouched;
 
+    public GameObject terrain;
+    public float borderLimitPerc = 0.80f;
     private Rigidbody rb;
     private GameObject[] rocks;
 
     int waterR;
     int organicMatterR;
     int mineralsR;
+
+    public GameObject youWin;
+    public GameObject youLose;
+    public GameObject mainTemplate;
 
     private Vector3 originalHeight, crouchedHeight;
     private Vector3 forward, right, heading;
@@ -41,8 +48,22 @@ public class RoverController : MonoBehaviour
     private GameObject precisionPointerAnchor;
     private Transform precisionPointerTransform;
     private Vector3 initialPointerPosition;
+    private bool isGameOver = false;
 
     private List<ResourcesModel> resourcesBag;
+    private int water = 0;
+    private int organicMatter = 0;
+    private int minerals = 0;
+
+    private AudioManager audioManager;
+
+    private void Awake()
+    {
+        youLose.SetActive(false);
+        youWin.SetActive(false);
+
+        audioManager = FindObjectOfType<AudioManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -87,15 +108,63 @@ public class RoverController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (!isGameOver)
         {
-            TakeDamage(5);
+            HandleGameOver();
         }
     }
 
     private void FixedUpdate()
     {
-        Control();
+        if (!isGameOver)
+        {
+            Control();
+            HandlePos();
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "Life")
+        {
+            audioManager.Play("HealthUpAudio");
+            currentHealth += lifeUpPerGear;
+            healthBar.SetHealth(currentHealth);
+            Destroy(other.gameObject);
+        }
+    }
+
+    void HandleGameOver ()
+    {
+        if (currentHealth <= 0)
+        {
+            mainTemplate.SetActive(false);
+            youLose.SetActive(true);
+            isGameOver = true;
+        }
+
+        if (waterR <= water && organicMatterR <= organicMatter && mineralsR <= minerals)
+        {
+            mainTemplate.SetActive(false);
+            youWin.SetActive(true);
+            isGameOver = true;
+        }
+    }
+
+    void HandlePos()
+    {
+
+        if (transform.position.x <= borderLimitPerc * terrain.transform.position.x 
+         || transform.position.x > -borderLimitPerc * terrain.transform.position.x)
+        {
+            transform.position = new Vector3(-transform.position.x, transform.position.y, transform.position.z);
+        }
+        if (transform.position.z <= borderLimitPerc * terrain.transform.position.z 
+         || transform.position.z > -borderLimitPerc * terrain.transform.position.z)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -transform.position.z);
+        }
+
     }
 
     void Control()
@@ -109,7 +178,7 @@ public class RoverController : MonoBehaviour
 
             heading = Vector3.Normalize(rightMovement2 + upMovement2); // direction used to turn around
 
-            transform.forward = heading * Time.deltaTime; // turn around
+            transform.forward = heading /** Time.deltaTime*/; // turn around
             rb.velocity = moveSpeed * heading;
             initialPointerPosition += initialPointerPosition + (moveSpeed * heading);
         }
@@ -203,6 +272,8 @@ public class RoverController : MonoBehaviour
 
         CollectResources(rockController.resources);
 
+        audioManager.Play("RockSmashAudio");
+
         Destroy(nearestEnemy);
     }
 
@@ -238,9 +309,9 @@ public class RoverController : MonoBehaviour
 
     void UpdateScreenResources()
     {
-        int water = 0;
-        int organicMatter = 0;
-        int minerals = 0;
+        water = 0;
+        organicMatter = 0;
+        minerals = 0;
 
         foreach(var resource in resourcesBag)
         {
@@ -263,7 +334,7 @@ public class RoverController : MonoBehaviour
     
     public void TakeDamage(int dmg)
     {
-        currentHealth -= dmg;
+        currentHealth = Mathf.Clamp(currentHealth - dmg, 0, maxHealth);
         healthBar.SetHealth(currentHealth);
     }
 }

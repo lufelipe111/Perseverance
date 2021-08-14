@@ -33,9 +33,10 @@ A planet exploration simple game
 		* [x] Generate random objectives
 * [x] Robot health
 * [x] Particle System sandstorm
-* [ ] Hole mechanics
-* [ ] Espherical terrain
-* [ ] Other ways to get materials
-* [ ] Rover Modeling
+* [x] Espherical terrain
+* [x] Life gears
 * [ ] Menu
 * [ ] Quit game
+* [ ] Hole mechanics
+* [ ] Other ways to get materials
+* [ ] Rover Modeling
