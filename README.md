@@ -10,8 +10,8 @@ A planet exploration simple game
 * Prof. Dr. Harlen Costa Batagelo
 
 ## Video e Slide
-* [YouTube](https://youtu.be/VSLqw8BzOvQ)
-* [Google Docs](https://drive.google.com/file/d/199TFwNBcPsWmDc0ugve0dJux9mSkPylh/view?usp=sharing)
+* [YouTube](https://youtu.be/pV_jmUyMIyg)
+* [Google Docs](https://drive.google.com/file/d/1OOE0nWPqUsoB4tWCrz7YY5HrWHFMgL0S/view?usp=sharing)
 
 ## To Do's
 * [x] Isometric vision
@@ -35,8 +35,8 @@ A planet exploration simple game
 * [x] Particle System sandstorm
 * [x] Espherical terrain
 * [x] Life gears
-* [ ] Menu
-* [ ] Quit game
+* [x] Menu
+* [x] Quit game
 * [ ] Hole mechanics
 * [ ] Other ways to get materials
 * [ ] Rover Modeling
